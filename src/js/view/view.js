@@ -211,6 +211,11 @@ function View(_api, _model) {
         focusHelper = flagNoFocus(_playerElement);
         fullscreenHelpers = requestFullscreenHelper(_playerElement, document, _fullscreenChangeHandler);
 
+        if (_floatOnScroll) {
+            const floatCloseButton = new FloatingCloseButton(_wrapperElement.querySelector('.jw-header'));
+            floatCloseButton.setup(_stopFloating, _localization.close);
+        }
+
         _model.on('change:hideAdsControls', function (model, val) {
             toggleClass(_playerElement, 'jw-flag-ads-hide-controls', val);
         });
@@ -274,10 +279,6 @@ function View(_api, _model) {
         const inDOM = document.body.contains(_playerElement);
         if (inDOM) {
             viewsManager.observe(_playerElement);
-            if (_floatOnScroll) {
-                const floatCloseButton = new FloatingCloseButton(_wrapperElement);
-                floatCloseButton.setup(_stopFloating, _localization.close);
-            }
         }
         _model.set('inDom', inDOM);
     };
